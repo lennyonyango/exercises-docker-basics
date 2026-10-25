@@ -1,1 +1,16 @@
 # use here COPY 1_13 .
+FROM golang:1.16-alpine
+
+EXPOSE 8080
+
+ENV REQUEST_ORIGIN=http://localhost:5001
+
+WORKDIR /usr/src/app
+
+COPY 1_13 .
+
+RUN go mod download
+
+RUN go build -v -o /usr/local/bin/server .
+
+CMD ["server", "8080/ping"]
